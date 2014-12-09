@@ -23,7 +23,7 @@
  * @wordpress-plugin
  * Plugin Name:       WordPress Plugin Dev Mode
  * Plugin URI:        http://example.com/plugin-name-uri/
- * Description:       Allows the enabling/disabling of wordpress based on one of several flags.
+ * Description:       Allows the enabling/disabling of WordPress plugins based on one of several flags.
  * Version:           0.1.0
  * Author:            Mark Cyrulik
  * Author URI:        http://markcyrulik.com/

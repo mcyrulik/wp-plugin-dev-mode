@@ -24,5 +24,13 @@ Couple of things that should be noted:
 * If the test of a method, name and value return ***true***, then the plugins that you have checked in the list at the bottom of the settings page will not be loaded when your page loads.
 * this plugin makes use of a feature in WordPress called [Must-Use Plugins](http://codex.wordpress.org/Must_Use_Plugins). These plugins cannot be disabled, do bot show in the plugin list and are always executed. There is a checkbox at the top of the settings page that will enable the use of the MU Plugin. This is the toggle that will stop our plugin from running.
 
+
+## DISCLAIMER
+**Use at your own risk. This plugin intentionally stops other pieces of code from running. If you stop a necessary plugin from running, and your site fails to function properly, you should just need to uncheck that particular plugin from disabling.
+This has been tested on several Wordpress installations, but it is not guaranteed to be perfect.**
+
+## Issues and suggestions
+If you find issues with the way teh plugin works, or have a suggestion as to how you think it could be improved in later release or future development, please [submit an issue](https://github.com/mcyrulik/wp-plugin-dev-mode/issues)
+
 ## Versions
 * **v0.1.0** - First development release. Let's call this early alpha..
