@@ -1,9 +1,29 @@
-<?php defined('ABSPATH') or die("No script kiddies please!"); ?>
+<?php
+defined('ABSPATH') or die("No script kiddies please!");
+
+if (file_exists(WP_CONTENT_DIR.'/wp-plugin-dev-mode/wp_dev_mode_plugin_options.json')) {
+    $file_contents = file_get_contents(WP_CONTENT_DIR.'/wp-plugin-dev-mode/wp_dev_mode_plugin_options.json');
+    $settings_array = json_decode($file_contents, true);
+} else {
+    $settings_array = null;
+}
+
+// If there is a settings_array, and our values are set then we are going to use those values, otherwise we'll get a value(if any) out of the database.
+$default_plugin_state = (isset($settings_array['wpdmp_default_plugin_state']) ? $settings_array['wpdmp_default_plugin_state'] : get_option('wpdmp_default_plugin_state'));
+$plugin_check_option = (isset($settings_array['wpdmp_plugin_check_option']) ? $settings_array['wpdmp_plugin_check_option'] : get_option('wpdmp_plugin_check_option'));
+
+$disable_mu_plugin = (isset($settings_array['wpdmp_disable_mu_plugin']) ? $settings_array['wpdmp_disable_mu_plugin'] : get_option('wpdmp_disable_mu_plugin'));
+
+$custom_var_name = (isset($settings_array['wpdmp_custom_var_name']) ? $settings_array['wpdmp_custom_var_name'] : get_option('wpdmp_custom_var_name'));
+$custom_var_value = (isset($settings_array['wpdmp_custom_var_value']) ? $settings_array['wpdmp_custom_var_value'] : get_option('wpdmp_custom_var_value'));
+
+$active_plugins = (isset($settings_array['wpdmp_plugin_dev_mode_data']) ? $settings_array['wpdmp_plugin_dev_mode_data'] : get_option('wpdmp_plugin_dev_mode_data'));
+?>
 <div class="wrap">
 <form method="post" action="options.php" name="wp-plugin-dev-mode-options">
 <h2>WP Plugin Dev Mode Plugin</h2>
 <h3>WP Plugin Dev Mode Options</h3>
-    <input type="checkbox" name="wpdmp_disable_mu_plugin" value="enable" <?= (get_option('wpdmp_disable_mu_plugin') == 'enable' ? 'checked=checked' : '') ?>>Enable the MU Plugin
+    <input type="checkbox" name="wpdmp_disable_mu_plugin" value="enable" <?= ($disable_mu_plugin == 'enable' ? 'checked=checked' : '') ?>>Enable the MU Plugin
     <div>
         <p>In this section you can set the overall settings of the plugin. The parameters that are defined here determine whether this particular installation of WordPress is a development environment.
         Further explanation of the options are below.</p>
@@ -17,8 +37,7 @@
     </div>
 
     <?php settings_fields( 'wp-plugin-dev-mode-settings-group' );
-        $default_plugin_state = get_option('wpdmp_default_plugin_state');
-        $plugin_check_option = get_option('wpdmp_plugin_check_option');
+
     ?>
     <?php //do_settings( 'wp-plugin-dev-mode-settings-group' ); ?>
     <table class="form-table">
@@ -36,11 +55,11 @@
         </tr>
         <tr valign="top">
             <th scope="row">Variable Name</th>
-            <td><input type="text" name="wpdmp_custom_var_name" value="<?php echo get_option('wpdmp_custom_var_name'); ?>" <?= ($plugin_check_option == 'wp_debug' ? 'disabled=disabled' : '') ?> /></td>
+            <td><input type="text" name="wpdmp_custom_var_name" value="<?php echo $custom_var_name; ?>" <?= ($plugin_check_option == 'wp_debug' ? 'disabled=disabled' : '') ?> /></td>
         </tr>
         <tr valign="top">
             <th scope="row">Variable Value</th>
-            <td><input type="text" name="wpdmp_custom_var_value" value="<?php echo get_option('wpdmp_custom_var_value'); ?>" <?= ($plugin_check_option == 'wp_debug' ? 'disabled=disabled' : '') ?> /></td>
+            <td><input type="text" name="wpdmp_custom_var_value" value="<?php echo $custom_var_value; ?>" <?= ($plugin_check_option == 'wp_debug' ? 'disabled=disabled' : '') ?> /></td>
         </tr>
 
 
@@ -62,9 +81,6 @@
         </thead>
     <?php
     $plugin_list = get_plugins();
-
-    // @todo: This should be our plugin list.
-    $active_plugins = get_option('wpdmp_plugin_dev_mode_data');
 
     foreach ($plugin_list as $id => $plugin) {
         // Taking this plugin out of the mix.

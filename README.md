@@ -2,12 +2,21 @@
 
 WP Plugin Dev Mode is a WordPress plugin that prevents other wordpress plugins from loading based on one of several criteria that you can choose. 
 
+Our issue was that there were certain plugins that we wanted to disable on our development environment. Google Analytics or other SEO plugins for example. It would really not be that hard to go in and
+deactivate the plugin on our development server, but long term, if I need to get a new copy of a production site for development work,  I have to go through and remember which one I disabled.
+
+Not only is this kind of a pain to remember, but when you add in several developers who have to do that same thing, and then add in multiple sites that you manage, this task becomes somewhat error prone.
+It also makes it harder to automate such a move.
+
+
+
 * **Server HTTP Host** - This will use the HTTP Host that is sent in as a header from the browser, If you choose this option, enter the url of your development site in the "Custom Value" field below.</li>
 * **Custom PHP Constant** - This will use a PHP constant that you define. The value must evaluate to true to be considered valid. False, empty, not set, etc. will all evaluate to false. You are responsible for defining and setting this constant.</li>
 * **Custom Apache Environment Variable** - Apache allows you to set environment variables in several ways. If you denote your development environment in this way, choose this option. You will need to enter not only the environment variable name but its value as well</li>
 * **WP_DEBUG Constant** - This is a standard debug constant is referenced int he WordPress Codex. This can also be used to identify this installation as a development installation. </li>
 
 We not disable the plugins. Some plugins remove settings when you disable them. This would be bad for moving from a development environment to a live/production environment.
+
 
 ## Installation
 
@@ -33,4 +42,5 @@ This has been tested on several Wordpress installations, but it is not guarantee
 If you find issues with the way teh plugin works, or have a suggestion as to how you think it could be improved in later release or future development, please [submit an issue](https://github.com/mcyrulik/wp-plugin-dev-mode/issues)
 
 ## Versions
+* **v0.2.0** - Added saving settings to JSON for easy code migration, other minor updates.
 * **v0.1.0** - First development release. Let's call this early alpha..
